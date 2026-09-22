@@ -2,9 +2,9 @@ use serde::Deserialize;
 use serde_json::value::RawValue;
 use std::borrow::Cow;
 use std::collections::BTreeMap;
-use strum_macros::{Display, EnumString};
+use strum_macros::{Display, EnumString, AsRefStr};
 
-#[derive(Debug, PartialEq, Eq, Display, EnumString, Deserialize)]
+#[derive(Debug, PartialEq, Eq, Display, EnumString, Deserialize, AsRefStr)]
 #[strum(serialize_all = "lowercase")]
 #[serde(rename_all = "lowercase")]
 pub enum QType { Choice, Score, Noul }
@@ -20,9 +20,11 @@ pub fn render_criterion(raw: &RawValue) -> &str {
 #[derive(Deserialize)]
 pub struct Query<'a> {
     pub t: QType,
+    pub ins: Cow<'a, str>,
     #[serde(borrow)]
     pub crit: Option<&'a RawValue>,
 }
+
 
 pub fn render_options<'a>(q: &'a Query<'a>) -> Vec<Cow<'a, str>> {
     let is_empty = |r: &RawValue| r.get() == "null" || r.get() == "\"\"";
