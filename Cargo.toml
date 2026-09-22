@@ -1,0 +1,11 @@
+[package]
+name = "vej"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+burn = { version = "~0.21", features = ["std", "tui", "train", "vision", "wgpu", "fusion"], default-features = false }
+serde = "1.0.229"
+serde_json = {version="1.0.151", features = ["raw_value"]}
+strum = "0.28.0"
+strum_macros = "0.28.0"
